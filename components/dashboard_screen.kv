@@ -1,0 +1,13 @@
+<DashboardsScreen@MDBottomNavigationItem>:
+    id: dashboard
+    name: "dashboard"
+    text: "Dashboard"
+    icon: "view-dashboard"
+    BoxLayout:
+        orientation: 'vertical'        
+        MDToolbar:
+            title: 'Hungry?'
+            right_action_items: [["sync", lambda x: app.sync_dashboard()]]
+            left_action_items: [["view-dashboard", lambda x: app.sync_dashboard()]]
+        BoxLayout:
+            

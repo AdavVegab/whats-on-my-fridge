@@ -1,0 +1,28 @@
+<ContentAdd@BoxLayout>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        id: input
+        hint_text: "What are you adding to the fridge?"
+    
+    MDFlatButton:
+        text: 'Add Item'
+        on_release: app.add_item()
+
+<ContenEdit@BoxLayout>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        id: input
+        hint_text: "What are you adding to the fridge?"
+    
+    MDFlatButton:
+        text: 'Confirm Changes'
+        on_release: app.edit_item()
+    
