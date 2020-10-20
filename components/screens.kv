@@ -1,0 +1,79 @@
+
+<ContentNavigationDrawer>:
+
+    ScrollView:
+
+        MDList:
+
+            OneLineAvatarIconListItem:
+                text: "Dashboard"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "dashboard"
+                IconLeftWidget:
+                    icon: "view-dashboard"
+                    on_press:
+                        root.nav_drawer.set_state("close")
+                        root.screen_manager.current = "dashboard"
+
+            OneLineAvatarIconListItem:
+                text: "Ingredients"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "ingredients"
+                IconLeftWidget:
+                    icon: "food-variant"
+                    on_press:
+                        root.nav_drawer.set_state("close")
+                        root.screen_manager.current = "ingredients"
+
+<RootScreenManagement@NavigationLayout>:
+    ScreenManager:
+        id: screen_manager
+        
+        Screen:
+            # DASHBOARD
+            id: dashboard
+            name: "dashboard"
+            text: "Dashboard"
+            icon: "view-dashboard"
+            BoxLayout:
+                orientation: 'vertical'        
+                MDToolbar:
+                    title: 'Hungry?'
+                    left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+                    right_action_items: [["view-dashboard", lambda x: app.sync_dashboard()]]
+                BoxLayout:
+        
+        Screen:
+            # INGREDIENTS
+            name: "ingredients"
+            text: "Ingredients"
+            icon: "food-variant"
+            BoxLayout:
+                orientation: 'vertical'        
+                MDToolbar:
+                    title: "What's in my Fridge?"
+                    #right_action_items: [["playlist-plus", lambda x: app.add_popup.open()]]
+                    left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
+
+                    right_action_items: [["playlist-plus", lambda x: root.add_items()]]
+
+                ScrollView:
+                    scroll_timeout : 1000
+                    MDList:
+                        id: md_list
+                        padding: 10
+                        spacing: 5
+        
+        Screen:
+            name: 'item_detail'
+            Button:
+                text: 'press_me'
+    
+    MDNavigationDrawer:
+        id: nav_drawer
+
+        ContentNavigationDrawer:
+            screen_manager: screen_manager
+            nav_drawer: nav_drawer
