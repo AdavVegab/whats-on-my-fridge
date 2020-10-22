@@ -34,6 +34,9 @@ class RootScreenManagement(NavigationLayout):
         super().__init__()
     def add_items(self):
         self.ids.screen_manager.current = 'item_detail'
+    
+    def to_ingredients(self):
+        self.ids.screen_manager.current = 'ingredients'
         
 Builder.load_file('components/screens.kv')
 

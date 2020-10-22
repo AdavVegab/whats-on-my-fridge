@@ -1,11 +1,9 @@
 <ContentNavigationDrawer>:
 
     ScrollView:
-
         MDList:
-
             OneLineAvatarIconListItem:
-                text: "Dashboard"
+                text: "What can I cook?"
                 on_press:
                     root.nav_drawer.set_state("close")
                     root.screen_manager.current = "dashboard"
@@ -16,7 +14,7 @@
                         root.screen_manager.current = "dashboard"
 
             OneLineAvatarIconListItem:
-                text: "Ingredients"
+                text: "What's in my Fridge?"
                 on_press:
                     root.nav_drawer.set_state("close")
                     root.screen_manager.current = "ingredients"
@@ -29,7 +27,6 @@
 <RootScreenManagement@NavigationLayout>:
     ScreenManager:
         id: screen_manager
-        
         Screen:
             # DASHBOARD
             id: dashboard
@@ -43,7 +40,6 @@
                     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
                     right_action_items: [["view-dashboard", lambda x: app.sync_dashboard()]]
                 BoxLayout:
-        
         Screen:
             # INGREDIENTS
             name: "ingredients"
@@ -55,11 +51,8 @@
                 orientation: 'vertical'        
                 MDToolbar:
                     title: "What's in my Fridge?"
-                    #right_action_items: [["playlist-plus", lambda x: app.add_popup.open()]]
                     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
-
                     right_action_items: [["playlist-plus", lambda x: root.add_items()]]
-
                 ScrollView:
                     scroll_timeout : 1000
                     MDList:
@@ -68,9 +61,39 @@
                         spacing: 5
         
         Screen:
+            # Add Ingredients
             name: 'item_detail'
-            BoxLayout:
-                orientation:
+            FloatLayout:
+                size: self.parent.size
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "What's in my Fridge?"
+                        left_action_items: [['arrow-left', lambda x: root.to_ingredients()]]
+                    BoxLayout:
+                        size: self.parent.size
+                        padding: 100
+                        orientation: 'vertical'
+                        MDLabel:
+                            
+                            text: "Add a Product"
+                            halign: 'center'
+                        MDTextFieldRound:
+                            id: new_ingredient
+                            icon_left: "food-variant"
+                            hint_text: "What's going in the fridge?"
+                            color_active: 0.9, 0.9, 0.9, 1
+                            current_hint_text_color: 0.5, 0.5, 0.5, 1
+                        BoxLayout:
+                
+                MDFloatingActionButton:
+                    icon: "plus"
+                    size_hint: None, None
+                    right: self.width and root.right - 40
+                    y: 40
+                    md_bg_color: app.theme_cls.primary_color
+                    on_release:
+                        app.add_ingredient()
     
     MDNavigationDrawer:
         id: nav_drawer
