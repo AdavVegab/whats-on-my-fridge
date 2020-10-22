@@ -5,7 +5,8 @@ import json
 
 class Ingredient:    
     image_url = "https://spoonacular.com/cdn/ingredients_100x100/"
-    def __init__(self, original_name, name, image, in_spoonacular=True):
+    def __init__(self,spoonacular_id, original_name, name, image, in_spoonacular=True):
+        self.spoonacular_id = spoonacular_id
         self.show_name = original_name
         self.spoonacular_name = name
         self.image = f"{self.image_url}{image}"
@@ -40,13 +41,13 @@ class FoodAPIManager:
         if response.status_code == 200:
             print (response.json())
             if response.json()[0].get('image', None) is not None:
-                return Ingredient(response.json()[0]['original'],response.json()[0]['name'],response.json()[0]['image'])    
+                return Ingredient(response.json()[0]['id'], response.json()[0]['original'],response.json()[0]['name'],response.json()[0]['image'])    
             else:
-                return Ingredient(response.json()[0]['original'],response.json()[0]['name'],'unknown', False)
+                return Ingredient(None, response.json()[0]['original'],response.json()[0]['name'],'unknown', False)
         else:
             print (response.status_code)
             print (response.text)
-            return Ingredient(input_name,input_name,'unknown', False)
+            return Ingredient(None, input_name,input_name,'unknown', False)
     
     
     def get_recipe_with_ingredients(self, ingredients: list):
@@ -62,13 +63,13 @@ class FoodAPIManager:
             missed_ingredients = []
             for subitem in item['missedIngredients']:                
                 # Extract the missed Ingredients
-                ingredient = Ingredient(subitem['name'], subitem['name'],subitem['image'].replace('https://spoonacular.com/cdn/ingredients_100x100/',''))
+                ingredient = Ingredient(subitem['id'], subitem['name'], subitem['name'],subitem['image'].replace('https://spoonacular.com/cdn/ingredients_100x100/',''))
                 missed_ingredients.append(ingredient)
             
             aviable_ingredients = []
             for subitem in item['usedIngredients']:                
                 # Extract the aviable Ingredients
-                ingredient = Ingredient(subitem['name'], subitem['name'],subitem['image'].replace('https://spoonacular.com/cdn/ingredients_100x100/',''))
+                ingredient = Ingredient(subitem['id'], subitem['name'], subitem['name'],subitem['image'].replace('https://spoonacular.com/cdn/ingredients_100x100/',''))
                 aviable_ingredients.append(ingredient)
                                 
                 
