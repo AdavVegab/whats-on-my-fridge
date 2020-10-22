@@ -12,6 +12,7 @@ class Ingredient(Base):
     id = Column(Integer, primary_key=True)
     show_name = Column(String, unique=True)
     spoonacular_name = Column(String)
+    spoonacular_id = Column(Integer)
     image = Column(String)
     
     def __repr__(self):
@@ -27,13 +28,14 @@ class DatabaseManager:
         Base.metadata.create_all(bind=engine)
         self.Session = sessionmaker(bind=engine)
         
-    def add_ingredient(self, show_name, spoonacular_name, image):
+    def add_ingredient(self, show_name, spoonacular_name, spoonacular_id, image):
         # Open Session
         session = self.Session()
         ingredient = Ingredient()
         ingredient.show_name = show_name
         ingredient.image = image
         ingredient.spoonacular_name = spoonacular_name
+        ingredient.spoonacular_id = spoonacular_id
         # Update Database
         session.add(ingredient)
         session.commit()
@@ -44,7 +46,6 @@ class DatabaseManager:
         # Open Session
         session = self.Session()
         ingredients = session.query(Ingredient).all()   
-
         # Close Session
         session.close()
         return ingredients
