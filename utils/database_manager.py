@@ -23,7 +23,7 @@ class DatabaseManager:
         # Create Engine
         basedir = os.path.abspath(os.path.dirname(__file__))
         path_db = os.path.join(basedir, 'ingredients.db')
-        engine = create_engine(f"sqlite:///{path_db}", echo=True)
+        engine = create_engine(f"sqlite:///{path_db}", echo=False)
         Base.metadata.create_all(bind=engine)
         self.Session = sessionmaker(bind=engine)
         

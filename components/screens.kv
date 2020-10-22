@@ -1,4 +1,3 @@
-
 <ContentNavigationDrawer>:
 
     ScrollView:
@@ -50,6 +49,8 @@
             name: "ingredients"
             text: "Ingredients"
             icon: "food-variant"
+            on_enter:
+                app.update_ingredients()
             BoxLayout:
                 orientation: 'vertical'        
                 MDToolbar:
@@ -68,8 +69,8 @@
         
         Screen:
             name: 'item_detail'
-            Button:
-                text: 'press_me'
+            BoxLayout:
+                orientation:
     
     MDNavigationDrawer:
         id: nav_drawer
