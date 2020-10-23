@@ -3,29 +3,114 @@
     padding: "8dp"
     size_hint: 1, None
     size: "280dp", "200dp"
+    on_release: app.open_recipe(root.recipe)
 
     AsyncImage:
         id: async_img
-        size_hint_x: 0.7
+        size_hint: None, 1
+        size: "280dp", "280dp"
     BoxLayout:
         orientation: 'vertical'
         MDLabel:
             text: root.text
             haling: 'center'
             theme_text_color: "Secondary"
-            size_hint_y: 1
+            height: self.texture_size[1]
+            size_hint_y: None
+            font_style: 'H6'
+        
+        MDLabel:
+            id: summary
+            haling: 'left'
+            theme_text_color: "Secondary"
             height: self.texture_size[1]
             size_hint_y: 0.3
-            font_style: 'H5'
+            font_style: 'Body1'
+            theme_text_color: "Hint"
+        MDLabel:
+            text: root.text
+            haling: 'center'
+            theme_text_color: "Secondary"
+            height: self.texture_size[1]
+            size_hint_y: 0.3
+            font_style: 'Subtitle1'
+            text: 'Missing:'
+        
+        StackLayout:
+            spacing: 3
+
+            id: chip_layout
+
+    # MDIconButton:
+    #     icon: "assets/images/cook.png"
+        
+    #     user_font_size: "60sp"
+
+<IngredientChip@MDChip>:
+    label: root.text
+    icon: ''
+
+<RecipeSummaryCard@MDCard>:
+    orientation: "horizontal"
+    padding: "8dp"
+    size_hint: 1, None
+    size: "280dp", "500dp"
+    on_release: app.open_recipe(root.recipe)
+
+    AsyncImage:
+        source: root.source_img
+        id: async_img
+        size_hint: None, 1
+        size: "280dp", "280dp"
+    BoxLayout:
+        orientation: 'vertical'        
+        MDLabel:
+            id: summary
+            haling: 'left'
+            theme_text_color: "Secondary"
+            height: self.texture_size[1]
+            size_hint_y: 0.05
+            font_style: 'Body1'
+            theme_text_color: "Hint"
+
         BoxLayout:
+            padding:10          
             BoxLayout:
                 orientation: 'vertical'
+                MDLabel:
+                    text: root.text
+                    haling: 'center'
+                    theme_text_color: "Secondary"
+                    height: self.texture_size[1]
+                    size_hint_y: 0.2
+                    font_style: 'Subtitle1'
+                    text: 'Missing:'
+                
+                StackLayout:
+                    spacing: 3
+                    id: chip_layout_missing
             
             BoxLayout:
                 orientation: 'vertical'
+                MDLabel:
+                    text: root.text
+                    haling: 'center'
+                    theme_text_color: "Secondary"
+                    height: self.texture_size[1]
+                    size_hint_y: 0.3
+                    font_style: 'Subtitle1'
+                    text: 'Aviable:'
+                
+                StackLayout:
+                    spacing: 3
+                    id: chip_layout_aviable
 
+<RecipeStepCard@MDCard>:
+    orientation: "horizontal"
+    padding: "20dp"
+    size_hint: 1, None
+    size: "280dp", "200dp"
+    on_release: app.open_recipe(root.recipe)
 
-    MDIconButton:
-        icon: "assets/images/cook.png"
-        on_release: app.open_recipe(root.recipe)
-        user_font_size: "60sp"
+    MDLabel:
+        text: root.text

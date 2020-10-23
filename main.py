@@ -1,8 +1,10 @@
 from kivy.lang import Builder
 from kivymd.app import MDApp
 # Components
+from kivymd.uix.label import MDLabel
 from components.ingredient_card import IngredientCard
-from components.recipe_card import RecipeCard
+from components.recipe_card import RecipeCard, RecipeSummaryCard, RecipeStepCard
+
 from components.screens import RootScreenManagement
 # uitls
 from utils.database_manager import DatabaseManager
@@ -39,12 +41,23 @@ class WhatsOnMyFridge(MDApp):
             ingredients.append(ingredient.spoonacular_name)
         print(ingredients)
         for recipe in api.get_recipe_with_ingredients(ingredients):
-            recipe_card = RecipeCard(recipe.name,0,recipe.image, recipe)
+            recipe_card = RecipeCard(recipe)
             print(recipe.image)
             self.manager.ids.md_list_recipe.add_widget(recipe_card)
             db.add_recipe(recipe.name, recipe.spoonacular_id, recipe.image, False)
+            
     def open_recipe(self, recipe):
-        print(recipe.name)
+        rows = [i for i in self.manager.ids.step_list.children]
+        for row in rows:
+            self.manager.ids.step_list.remove_widget(row)
+        self.manager.to_recipe()
+        self.manager.ids.recipe_title.title = recipe.name
+        self.manager.ids.step_list.add_widget(RecipeSummaryCard(recipe))
+       # self.manager.ids.recipe_image.source = recipe.image
+        for step in api.get_full_recipe(recipe.spoonacular_id):
+            step_card = RecipeStepCard(step['step'])
+            self.manager.ids.step_list.add_widget(step_card)
+            
         
 
     def update_ingredients(self):

@@ -37,6 +37,13 @@ class RootScreenManagement(NavigationLayout):
     
     def to_ingredients(self):
         self.ids.screen_manager.current = 'ingredients'
+    
+    def to_dashboard(self):
+        self.ids.screen_manager.current = 'dashboard'
+    
+    def to_recipe(self):
+        self.ids.screen_manager.current = 'recipe'
+
         
 Builder.load_file('components/screens.kv')
 

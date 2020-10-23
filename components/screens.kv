@@ -101,6 +101,26 @@
                     md_bg_color: app.theme_cls.primary_color
                     on_release:
                         app.add_ingredient()
+        
+        Screen:
+            # Recipe Detail
+            name: 'recipe'
+
+            BoxLayout:
+                orientation: 'vertical'
+                MDToolbar:
+                    id: recipe_title
+                    title: "What's in my Fridge?"
+                    left_action_items: [['arrow-left', lambda x: root.to_dashboard()]]
+
+                ScrollView:
+                    scroll_timeout : 1000
+                    MDList:     
+                        orientation: 'vertical'
+                        id: step_list
+                        padding: 10
+                        spacing: 5
+                        
     
     MDNavigationDrawer:
         id: nav_drawer

@@ -31,6 +31,7 @@ class FoodAPIManager:
     _api_key = os.environ['API_KEY_SPOONACULAR']
     ingredient_info_path = "/recipes/parseIngredients"
     recipe_search_path = "/recipes/findByIngredients"
+    recipe_steps_path = ""
 
     def get_ingredient_info(self, input_name: str):
           
@@ -48,7 +49,15 @@ class FoodAPIManager:
             print (response.status_code)
             print (response.text)
             return Ingredient(None, input_name,input_name,'unknown', False)
-    
+        
+    def get_full_recipe(self, spoonacular_id):
+        steps = []
+        url = f"{self.spoonacular_url}/recipes/{spoonacular_id}/analyzedInstructions?apiKey={self._api_key}&stepBreakdown=true"
+        print(url)
+        response = requests.request("GET", url)
+        for item in response.json()[0]['steps']:
+            steps.append(item)
+        return steps
     
     def get_recipe_with_ingredients(self, ingredients: list):
         recipes = []
@@ -77,3 +86,5 @@ class FoodAPIManager:
             recipes.append(recipe)
         
         return recipes
+
+FoodAPIManager().get_full_recipe(160487)
