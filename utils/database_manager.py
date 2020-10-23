@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
-from  sqlalchemy import Column, Integer, String, Float
+from  sqlalchemy import Column, Integer, String, Float, Boolean
 import os
 
 Base = declarative_base()
@@ -18,15 +18,49 @@ class Ingredient(Base):
     def __repr__(self):
         return "<Ingredient(show_name='%s', spoonacular_name='%s', image='%s')>" % (self.show_name, self.spoonacular_name, self.image)
 
+class Recipe(Base):
+    __tablename__ = 'recipe'
+    
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    spoonacular_id = Column(Integer, unique=True)
+    image = Column(String)
+    opened = Column(Boolean)
+    
+    
+    def __repr__(self):
+        return "<Recipe(name='%s', image='%s')>" % (self.name, self.image)
+
 
 class DatabaseManager:
     def __init__(self):
         # Create Engine
         basedir = os.path.abspath(os.path.dirname(__file__))
-        path_db = os.path.join(basedir, 'ingredients.db')
+        path_db = os.path.join(basedir, 'whatsinmyfridge.db')
         engine = create_engine(f"sqlite:///{path_db}", echo=False)
         Base.metadata.create_all(bind=engine)
         self.Session = sessionmaker(bind=engine)
+    
+    def add_recipe(self, name:str, spoonacular_id: int, image: str, opened: bool):
+        
+        # Open Session
+        session = self.Session()        
+        # Check if already exist
+        to_check = session.query(Recipe).filter_by(spoonacular_id=spoonacular_id).first()
+        if to_check is not None:
+            session.close()
+            return       
+        # Add new Recipe
+        recipe = Recipe()
+        recipe.name = name
+        recipe.spoonacular_id = spoonacular_id
+        recipe.image = image
+        recipe.opened = opened
+        # Update Database
+        session.add(recipe)
+        session.commit()
+        # Close Session
+        session.close()
         
     def add_ingredient(self, show_name, spoonacular_name, spoonacular_id, image):
         # Open Session
@@ -58,12 +92,3 @@ class DatabaseManager:
         session.commit()
         # Close Session
         session.close()
-
-
-# database = DatabaseManager()
-
-# database.add_ingredient('apple', 'apple red', 'unknown.png')
-# for ingredient in database.get_all_ingredients():
-#     print (ingredient.show_name)
-# database.delete_ingredient('apple')
-# database.delete_ingredient('apple')

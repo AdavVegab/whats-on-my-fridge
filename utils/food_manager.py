@@ -16,7 +16,7 @@ class Recipe:
     def __init__(self, spoonacular_id, name, image, aviable_ingredients_nr, missing_ingredients_nr, aviable_ingredients, missing_ingredients):
         self.spoonacular_id = spoonacular_id
         self.name = name
-        self.image = "image"
+        self.image = image
         self.nr_missing = missing_ingredients_nr
         self.nr_aviable = aviable_ingredients_nr
         self.missing = missing_ingredients

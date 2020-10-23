@@ -1,0 +1,31 @@
+<RecipeCard@MDCard>:
+    orientation: "horizontal"
+    padding: "8dp"
+    size_hint: 1, None
+    size: "280dp", "200dp"
+
+    AsyncImage:
+        id: async_img
+        size_hint_x: 0.7
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: root.text
+            haling: 'center'
+            theme_text_color: "Secondary"
+            size_hint_y: 1
+            height: self.texture_size[1]
+            size_hint_y: 0.3
+            font_style: 'H5'
+        BoxLayout:
+            BoxLayout:
+                orientation: 'vertical'
+            
+            BoxLayout:
+                orientation: 'vertical'
+
+
+    MDIconButton:
+        icon: "assets/images/cook.png"
+        on_release: app.open_recipe(root.recipe)
+        user_font_size: "60sp"
