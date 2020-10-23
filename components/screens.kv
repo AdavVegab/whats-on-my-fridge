@@ -33,13 +33,20 @@
             name: "dashboard"
             text: "Dashboard"
             icon: "view-dashboard"
+            on_enter:
+                app.search_for_recipes()
             BoxLayout:
                 orientation: 'vertical'        
                 MDToolbar:
                     title: 'Hungry?'
                     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
-                    right_action_items: [["view-dashboard", lambda x: app.sync_dashboard()]]
-                BoxLayout:
+                    right_action_items: [["refresh", lambda x: app.search_for_recipes()]]
+                ScrollView:
+                    scroll_timeout : 1000
+                    MDList:
+                        id: md_list_recipe
+                        padding: 10
+                        spacing: 5
         Screen:
             # INGREDIENTS
             name: "ingredients"
