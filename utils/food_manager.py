@@ -40,11 +40,10 @@ class FoodAPIManager:
     """
     Food API Manager Class
     
-    Contaions all the Variables and methods to use the Spoonacular API
+    Contains all the Variables and methods to use the Spoonacular API
     https://spoonacular.com/food-api
     
     Can only work correctly if an enviroment Variable API_KEY_SPOONACULAR exist in the actual enviroment
-
     """
     
     headers = {'content-type': "application/x-www-form-urlencoded"}
