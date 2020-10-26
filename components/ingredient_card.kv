@@ -13,27 +13,6 @@
         size_hint_y: 1
         height: self.texture_size[1]
 
-
     MDIconButton:
         icon: "delete"
         on_release: app.delete_ingredient(root)
-        #user_font_size: "40sp"
-
-# <IngredientCard@MDCardSwipe>:
-#     size_hint_y: None
-#     height: content.height
-
-#     MDCardSwipeLayerBox:
-#         padding: "8dp"
-
-#         MDIconButton:
-#             icon: "trash-can"
-#             pos_hint: {"center_y": .5}
-#             on_release: app.remove_item(root)
-
-#     MDCardSwipeFrontBox:
-
-#         OneLineListItem:
-#             id: content
-#             text: root.text
-#             _no_ripple_effect: True

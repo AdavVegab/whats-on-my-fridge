@@ -39,9 +39,7 @@ class WhatsOnMyFridge(MDApp):
     
     def search_for_recipes(self):
         """
-        Searches for new Recipes (if necessary) using the Spoonacular Food API
-        
-        https://spoonacular.com/food-api
+        Searches for new Recipes (if necessary).
         
         Then Creates RecipeCards to show the Recipes and the missing ingredients
         on the Dashboard Screen.
