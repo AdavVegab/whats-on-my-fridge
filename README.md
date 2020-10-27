@@ -10,9 +10,11 @@ The following steps will guide you through setting up all the necessary dependen
 
 to use the code you will need a python installation, i would strongly recomend using [Python 3.7.9](https://www.python.org/downloads/release/python-379/).
 
-1. Install python on your system and create a new virtual enviroment using Python virtualenv
+1. Install python on your system and create a new virtual enviroment using Python virtualenv in the repository folder
 
 ```bash
+python -m pip install --upgrade pip wheel setuptools virtualenv
+
 python -m virtualenv whatsonmyfridge_venv
 ```
 
@@ -65,9 +67,14 @@ if you are accessing this from the competition Application you can use the APIKe
 
 after getting your Spoonacular APIKey, you will need to set an enviroment variable
 
+- in linux:
 ```bash
 export API_KEY_SPOONACULAR="1234YOURAPIKEY890"
 ```
+- in windows:
+
+add the following to the file ```whatsonmyfridge_venv\Scripts\activate.bat``` in your virtual enviroment:
+
 
 Now our are all set!
 
