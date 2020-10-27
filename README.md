@@ -74,6 +74,9 @@ export API_KEY_SPOONACULAR="1234YOURAPIKEY890"
 - in windows:
 
 add the following to the file ```whatsonmyfridge_venv\Scripts\activate.bat``` in your virtual enviroment:
+```bash
+set "API_KEY_SPOONACULAR=1234YOURAPIKEY890"
+```
 
 
 Now our are all set!
