@@ -43,6 +43,9 @@ class RootScreenManagement(NavigationLayout):
     
     def to_recipe(self):
         self.ids.screen_manager.current = 'recipe'
+    
+    def to_favorites(self):
+        self.ids.screen_manager.current = 'favorites'
 
         
 Builder.load_file('components/screens.kv')

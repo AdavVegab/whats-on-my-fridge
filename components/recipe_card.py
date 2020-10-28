@@ -52,7 +52,24 @@ class RecipeCard(MDCard):
             chip.color = (0.5,0.5,0.5,1)
             self.ids.chip_layout.add_widget(chip)
 
+class RecipeFavoriteCard(MDCard):
+    """
+    MDCard containing a overview of the Recipe (for the Dashboard)
+    """
+    text = StringProperty ()
+    def __init__(self, recipe):
+        super().__init__()
+        self.text = recipe.name
+        self.spoonacular_id = recipe.spoonacular_id
+        self.image = recipe.image
+        self.recipe = recipe
+        # Show Image
+        if 'unknown' not in self.image:
+            self.ids.async_img.source = self.image
+        else:
+            self.ids.async_img.source = 'assets/images/unknown.png'
 
+            
 class RecipeSummaryCard(MDCard):
     """
     MDCard containing all the relevant info of the Recipe
@@ -85,6 +102,8 @@ class RecipeSummaryCard(MDCard):
             name = ingredient.spoonacular_name            
             chip = IngredientChip(label=name)            
             self.ids.chip_layout_aviable.add_widget(chip)
+    
+    
 
 class RecipeStepCard(MDCard):
     """

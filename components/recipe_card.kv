@@ -28,6 +28,7 @@
             font_style: 'Body1'
             theme_text_color: "Hint"
         MDLabel:
+            id: missing_text
             text: root.text
             haling: 'center'
             theme_text_color: "Secondary"
@@ -39,6 +40,88 @@
         StackLayout:
             spacing: 3
             id: chip_layout
+    MDIconButton:
+        id: favorite_mark
+        icon: "heart-outline"
+        
+        theme_text_color: "Custom"
+        text_color : 0,0,0,1
+        on_release: app.toggle_favorite_recipe(root)
+
+<RecipeFavoriteCard@MDCard>:
+    orientation: "horizontal"
+    padding: "8dp"
+    size_hint: 1, None
+    size: "280dp", "70dp"
+    on_release: app.open_recipe(root.recipe)
+
+    AsyncImage:
+        id: async_img
+        size_hint: 0.3, 1
+        size: "280dp", "280dp"
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: root.text
+            haling: 'center'
+            theme_text_color: "Secondary"
+            height: self.texture_size[1]
+            size_hint_y: None
+            font_style: 'H6'
+        
+    MDIconButton:
+        id: favorite_mark
+        icon: "delete"
+        on_release: app.toggle_favorite_recipe(root)   
+
+<RecipeCardFavorited@MDCard>:
+    orientation: "horizontal"
+    padding: "8dp"
+    size_hint: 1, None
+    size: "280dp", "200dp"
+    on_release: app.open_recipe(root.recipe)
+
+    AsyncImage:
+        id: async_img
+        size_hint: None, 1
+        size: "280dp", "280dp"
+    BoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text: root.text
+            haling: 'center'
+            theme_text_color: "Secondary"
+            height: self.texture_size[1]
+            size_hint_y: None
+            font_style: 'H6'
+        
+        MDLabel:
+            id: summary
+            haling: 'left'
+            theme_text_color: "Secondary"
+            height: self.texture_size[1]
+            size_hint_y: 0.3
+            font_style: 'Body1'
+            theme_text_color: "Hint"
+        MDLabel:
+            text: root.text
+            haling: 'center'
+            theme_text_color: "Secondary"
+            height: self.texture_size[1]
+            size_hint_y: 0.3
+            font_style: 'Subtitle1'
+            text: 'Missing:'
+        
+        StackLayout:
+            spacing: 3
+            id: chip_layout
+    MDIconButton:
+        id: favorite_mark
+        icon: "heart-outline"
+        
+        theme_text_color: "Custom"
+        text_color : 0,0,0,1
+        on_release: app.toggle_favorite_recipe(root)        
 
 <IngredientChip@MDChip>:
     label: root.text

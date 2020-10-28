@@ -4,17 +4,18 @@ What's on my Fridge App
 Allows to save and retrieve the Griceries that the user has, and recomends Recipes base on that information
 """
 
+from os import name
 from kivy.lang import Builder
 from kivy.logger import Logger
 from kivymd.app import MDApp
 # Components
 from kivymd.uix.label import MDLabel
 from components.ingredient_card import IngredientCard
-from components.recipe_card import RecipeCard, RecipeSummaryCard, RecipeStepCard
+from components.recipe_card import RecipeCard, RecipeSummaryCard, RecipeStepCard, RecipeFavoriteCard
 from components.screens import RootScreenManagement
 # uitls
 from utils.database_manager import DatabaseManager
-from utils.food_manager import FoodAPIManager
+from utils.food_manager import FoodAPIManager, Recipe
 
 # Managers
 db = DatabaseManager()
@@ -51,6 +52,7 @@ class WhatsOnMyFridge(MDApp):
             Logger.info('SearchRecipes: No changes in the Ingredients, Skipping...')
             return
         self.ingredients_changed = False
+        self.favorites_changed = True
         
         # Clean the MDList
         rows = [i for i in self.manager.ids.md_list_recipe.children]
@@ -71,7 +73,16 @@ class WhatsOnMyFridge(MDApp):
             # Add the Card to the Dashboard
             self.manager.ids.md_list_recipe.add_widget(recipe_card)
             # Add the Recomendation to the DB
-            db.add_recipe(recipe.name, recipe.spoonacular_id, recipe.image, False)
+            db.add_recipe(recipe.name, recipe.spoonacular_id, recipe.image)
+            # Favorited? 
+            favorited = db.check_for_favorite(recipe.spoonacular_id)
+            # Change Logo
+            if favorited:
+                recipe_card.ids.favorite_mark.icon = "heart"
+                recipe_card.ids.favorite_mark.text_color = (0.7755,0.1122,0.1122,1)
+            else:
+                recipe_card.ids.favorite_mark.icon = "heart-outline"
+                recipe_card.ids.favorite_mark.text_color = (0,0,0,1)
             
     def open_recipe(self, recipe):
         """Opens a recipe to show the details and preparation Steps
@@ -81,6 +92,9 @@ class WhatsOnMyFridge(MDApp):
         Args:
             recipe (food_manager.Recipe): A Recipe Object with the basic information from Spoonacular
         """
+        if recipe.aviable == None:
+            aviable_ingredients = db.get_all_ingredients()
+            recipe = api.get_recipe(recipe.spoonacular_id, aviable_ingredients)
         Logger.info(f'OpenRecipe: Opening the Recipe {recipe.name}')
         
         # Clean the Container (StepList)        
@@ -98,8 +112,7 @@ class WhatsOnMyFridge(MDApp):
         Logger.info(f'OpenRecipe: Add Steps for {recipe.name}')
         for step in api.get_full_recipe(recipe.spoonacular_id):
             step_card = RecipeStepCard(step['step'])
-            self.manager.ids.step_list.add_widget(step_card)            
-        
+            self.manager.ids.step_list.add_widget(step_card)               
 
     def update_ingredients(self):
         """
@@ -148,6 +161,66 @@ class WhatsOnMyFridge(MDApp):
         # re-Populate the IngredientsCards
         self.update_ingredients()
         self.ingredients_changed = True
+    
+    def open_favorites(self):
+        """
+        Shows the Recipes that the user saved as favorite
+         
+        """
+        self.manager.to_favorites()
+        
+        if not self.favorites_changed:
+            Logger.info('SearchRecipes: No changes in the Favorites, Skipping...')
+            return
+        # Clean the MDList
+        rows = [i for i in self.manager.ids.md_list_fav.children]
+        for row in rows:
+            self.manager.ids.md_list_fav.remove_widget(row)
+        # Load all recipes
+        for recipe in db.get_all_recipes():
+            # Check if favorited
+            if not recipe.favorite:
+                continue
+   
+            # Create the Recipe Card 
+            recipe_card = RecipeFavoriteCard(Recipe(recipe.spoonacular_id, recipe.name, recipe.image, None, None, None, None))
+            
+            Logger.info(f'OpenFavorited: Created RecipeCard for {recipe.name}')
+            # Add the Card to the Dashboard
+            self.manager.ids.md_list_fav.add_widget(recipe_card)
+            # Add the Recomendation to the DB
+        
+        self.favorites_changed = False
+
+    
+    def toggle_favorite_recipe(self, recipe_card):
+        """
+        Toggles the value of the favorite bool property of the recipe in the database
+        then updates the icon
+
+        Args:
+            recipe_card (MDCard): Caller Widget
+        """
+        # Read Info
+        spoonacular_id = recipe_card.recipe.spoonacular_id
+        
+        # Update DB
+        favorited = db.toggle_favorite_recipe(spoonacular_id)
+        
+        # Change Logo
+        if favorited:
+            recipe_card.ids.favorite_mark.icon = "heart"
+            recipe_card.ids.favorite_mark.text_color = (0.7755,0.1122,0.1122,1)
+        else:
+            recipe_card.ids.favorite_mark.icon = "heart-outline"
+            recipe_card.ids.favorite_mark.text_color = (0,0,0,1)
+        self.favorites_changed = True
+        
+        # Try removing the Widget
+        if self.manager.ids.screen_manager.current == 'favorites':
+            self.manager.ids.md_list_fav.remove_widget(recipe_card)
+            
+        
 
 if __name__ == "__main__":
     # Run the App!

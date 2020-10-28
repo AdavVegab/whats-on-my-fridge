@@ -39,7 +39,7 @@
                 MDToolbar:
                     title: 'Hungry?'
                     left_action_items: [['menu', lambda x: nav_drawer.toggle_nav_drawer()]]
-                    right_action_items: [["refresh", lambda x: app.search_for_recipes()]]
+                    right_action_items: [["tag-heart", lambda x: app.open_favorites()]]
                 ScrollView:
                     scroll_timeout : 1000
                     MDList:
@@ -113,6 +113,7 @@
                     left_action_items: [['arrow-left', lambda x: root.to_dashboard()]]
 
                 ScrollView:
+                    id: scroll1
                     scroll_timeout : 1000
                     MDList:     
                         orientation: 'vertical'
@@ -120,6 +121,25 @@
                         padding: 10
                         spacing: 5
                         
+        Screen:
+            # Favorites
+            id: favorites
+            name: "favorites"
+            text: "Favorites"
+            icon: "tag-heart"
+            on_enter:
+                app.search_for_recipes()
+            BoxLayout:
+                orientation: 'vertical'        
+                MDToolbar:
+                    title: 'Favorite Recipes'
+                    left_action_items: [['arrow-left', lambda x: root.to_dashboard()]]
+                ScrollView:
+                    scroll_timeout : 1000
+                    MDList:
+                        id: md_list_fav
+                        padding: 10
+                        spacing: 5
     MDNavigationDrawer:
         id: nav_drawer
 

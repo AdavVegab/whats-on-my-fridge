@@ -8,6 +8,7 @@ https://docs.sqlalchemy.org/
 
 """
 
+import re
 from kivy.logger import Logger
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -42,7 +43,7 @@ class Recipe(Base):
     name = Column(String)
     spoonacular_id = Column(Integer, unique=True)
     image = Column(String)
-    opened = Column(Boolean)
+    favorite = Column(Boolean)
         
     def __repr__(self):
         return "<Recipe(name='%s', image='%s')>" % (self.name, self.image)
@@ -66,7 +67,7 @@ class DatabaseManager:
         Base.metadata.create_all(bind=engine)
         self.Session = sessionmaker(bind=engine)
     
-    def add_recipe(self, name:str, spoonacular_id: int, image: str, opened: bool):
+    def add_recipe(self, name:str, spoonacular_id: int, image: str):
         """
         Adds a new Recipe to the Database
 
@@ -89,7 +90,7 @@ class DatabaseManager:
         recipe.name = name
         recipe.spoonacular_id = spoonacular_id
         recipe.image = image
-        recipe.opened = opened
+        recipe.favorite = False
         # Update Database
         session.add(recipe)
         session.commit()
@@ -124,7 +125,7 @@ class DatabaseManager:
         """Returns a list of the Ingredients present in the database
 
         Returns:
-            Ingredient: All the ingredients in the DB
+            List: All the ingredients in the DB
         """
         # Open Session
         session = self.Session()
@@ -132,6 +133,20 @@ class DatabaseManager:
         # Close Session
         session.close()
         return ingredients
+    
+    def get_all_recipes(self):
+        """Returns a list of the Recipes present in the database
+
+        Returns:
+            List: All the recipes in the DB
+        """
+        # Open Session
+        session = self.Session()
+        recipes = session.query(Recipe).all()   
+        # Close Session
+        session.close()
+        return recipes
+        
 
     def delete_ingredient(self, show_name: str):
         """
@@ -148,3 +163,31 @@ class DatabaseManager:
         session.commit()
         # Close Session
         session.close()
+        
+    def check_for_favorite(self, spoonacular_id):
+        # Open Session
+        session = self.Session()
+        to_check = to_toggle = session.query(Recipe).filter_by(spoonacular_id=spoonacular_id).first()
+        # Close Session
+        session.close()
+        if to_check.favorite:
+            return True
+        else:
+            return False
+
+    def toggle_favorite_recipe(self, spoonacular_id):
+        new_value = False
+        # Open Session
+        session = self.Session()
+        # Search for the Recipe
+        to_toggle = session.query(Recipe).filter_by(spoonacular_id=spoonacular_id).first()
+        if to_toggle.favorite:
+            to_toggle.favorite = False
+            new_value = False
+        else:
+            to_toggle.favorite = True
+            new_value = True
+        session.commit()
+        # Close Session
+        session.close()
+        return new_value

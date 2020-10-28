@@ -137,7 +137,7 @@ class FoodAPIManager:
         # Check Response
         
         if response.status_code == 200:
-            Logger.info(f'GetRecipeWithIngred: JSON>> {response.json}')
+            Logger.info(f'GetRecipeWithIngred: JSON>> {response.json()}')
             for item in response.json():
                 missed_ingredients = []
                 for subitem in item['missedIngredients']:                
@@ -162,3 +162,42 @@ class FoodAPIManager:
             recipe = Recipe(00, f'ERROR API <{response.status_code}>', 'unknown',0, 0, [],[])
             recipes.append(recipe)
             return recipes
+    
+    def get_recipe(self, spoonacular_id, available_ingredients):
+        # Prepare Data
+        recipe = Recipe
+        url = f"{self.spoonacular_url}/recipes/{spoonacular_id}/information?apiKey={self._api_key}&includeNutrition=false"
+        # Call API
+        response = requests.request("GET", url)
+        Logger.info(f'GetRecipeInfo: Response Status <{response.status_code}>')
+        if response.status_code == 200:
+            Logger.debug(f'GetFullRecipe: JSON>> {response.json()}')            
+            # Analyse Ingredients
+            missing_nr = 0
+            missing = []
+            available_nr = 0
+            available = []
+            for necesary_ingredient in response.json()['extendedIngredients']:
+                ingredient = Ingredient(necesary_ingredient['id'], necesary_ingredient['name'], necesary_ingredient['name'], necesary_ingredient['image'], True)
+                in_fridge = False
+                for available_ingredient in available_ingredients:
+                    if available_ingredient.spoonacular_id == necesary_ingredient['id']:
+                        in_fridge = True
+                        break                
+                if in_fridge:
+                    available_nr += 1
+                    available.append(ingredient)
+                else:
+                    missing_nr += 1
+                    missing.append(ingredient)            
+            return Recipe(spoonacular_id, response.json()['title'], response.json()['image'],available_nr, missing_nr, available, missing)
+            
+
+        else:
+            # Fallback (return error message)
+            Logger.error(f'GetFullRecipe: Invalid Response Code <{response.status_code}>')
+            Logger.error(f'GetFullRecipe: Response<{response.text}>')
+            recipe = Recipe(00, f'ERROR API <{response.status_code}>', 'unknown',0, 0, [],[])
+            return recipe
+    
+    
