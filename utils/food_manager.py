@@ -100,9 +100,15 @@ class FoodAPIManager:
         # Check response
         if response.status_code == 200:
             Logger.info(f'GetFullRecipe: JSON>> {response.json}')
-            for item in response.json()[0]['steps']:
-                steps.append(item)
-            return steps
+            try:
+                for item in response.json()[0]['steps']:
+                    steps.append(item)
+                return steps
+            except:
+                # Fallback (return error message)
+                Logger.error(f'GetFullRecipe: Invalid Response Code <{response.status_code}>')
+                Logger.error(f'GetFullRecipe: Response<{response.text}>')
+                return [{'step': f'Error in the Spoonacular API <EmptyResponse>'}]
         else:
             # Fallback (return error message)
             Logger.error(f'GetFullRecipe: Invalid Response Code <{response.status_code}>')
