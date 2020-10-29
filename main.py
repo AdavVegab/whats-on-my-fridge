@@ -134,7 +134,7 @@ class WhatsOnMyFridge(MDApp):
             self.manager.ids.md_list.remove_widget(row)
         # Re-populate from DB
         for ingredient in db.get_all_ingredients():
-            ingredient_card = IngredientCard(ingredient.show_name,ingredient.id, ingredient.image)
+            ingredient_card = IngredientCard(ingredient)
             Logger.info(f'UpdateIngredients: Created the Card for {ingredient.show_name}')
             self.manager.ids.md_list.add_widget(ingredient_card)
             
@@ -149,22 +149,22 @@ class WhatsOnMyFridge(MDApp):
         ingredient = api.get_ingredient_info(user_input)
         # Add to the database
         db.add_ingredient(ingredient.show_name,ingredient.spoonacular_name,ingredient.spoonacular_id,  ingredient.image)
-        Logger.info(f'AddIngredients: Added to the Database <{ingredient.spoonacular_name}>')
+        Logger.info(f'AddIngredients: Added to the Database <{ingredient.spoonacular_name}:{ingredient.spoonacular_id}>')
         # Clear Field
         self.manager.ids.new_ingredient.text = ''
         self.manager.to_ingredients()
         # Report a change to the App
         self.ingredients_changed = True        
         
-    def delete_ingredient(self, ingredient):
+    def delete_ingredient(self, ingredient_card):
         """
         Removes the Ingredient from the Database
         Args:
             ingredient (ingredient_card.IngredientCard): The Ingredient Card containing the ingredient name
         """
         # Remove from database
-        db.delete_ingredient(ingredient.text)
-        Logger.info(f'DeleteIngredients: Deleted from the Database <{ingredient.text}>')
+        db.delete_ingredient(ingredient_card.ingredient.spoonacular_id)
+        Logger.info(f'DeleteIngredients: Deleted from the Database <{ingredient_card.label}>')
         # re-Populate the IngredientsCards
         self.update_ingredients()
         self.ingredients_changed = True

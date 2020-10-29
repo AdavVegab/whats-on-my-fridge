@@ -13,13 +13,13 @@ class IngredientCard(MDCard):
     """
     label = StringProperty()
     image_url = StringProperty()
-    spoonacular_id = NumericProperty()
     
-    def __init__(self, label, spoonacular_id, image):
+    def __init__(self, ingredient):
         # Initialize Values
-        self.label = label.capitalize()
-        self.spoonacular_id = spoonacular_id
-        self.image_url = image
+        self.ingredient = ingredient
+        self.label = ingredient.show_name.capitalize()
+        self.spoonacular_id = ingredient.spoonacular_id
+        self.image_url = ingredient.image
         
         if 'unknown' in self.image_url:
             self.image_url = 'assets/images/unknown.png'

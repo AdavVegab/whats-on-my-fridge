@@ -8,6 +8,7 @@ https://docs.sqlalchemy.org/
 
 """
 
+from logging import StringTemplateStyle
 import re
 from kivy.logger import Logger
 from sqlalchemy import create_engine
@@ -25,9 +26,9 @@ class Ingredient(Base):
     __tablename__ = 'ingredients'
     
     id = Column(Integer, primary_key=True)
-    show_name = Column(String, unique=True)
+    show_name = Column(String)
     spoonacular_name = Column(String)
-    spoonacular_id = Column(Integer)
+    spoonacular_id = Column(Integer, unique=True)
     image = Column(String)
     
     def __repr__(self):
@@ -148,17 +149,19 @@ class DatabaseManager:
         return recipes
         
 
-    def delete_ingredient(self, show_name: str):
+    def delete_ingredient(self, spoonacular_id: int):
         """
         Deletes an ingredient from the DB
 
         Args:
-            show_name (str): name to search in the Database (and the delete it)
+            spoonacular_id (int): id to search in the Database (and the delete it)
         """
         # Open Session
+        print(spoonacular_id)
         session = self.Session()
         # Search for the ingredient
-        to_delete = session.query(Ingredient).filter_by(show_name=show_name).first() 
+        to_delete = session.query(Ingredient).filter_by(spoonacular_id=spoonacular_id).first() 
+        print(to_delete.spoonacular_id)
         session.delete(to_delete)
         session.commit()
         # Close Session
