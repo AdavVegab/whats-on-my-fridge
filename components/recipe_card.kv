@@ -1,15 +1,21 @@
 <RecipeCard@MDCard>:
     orientation: "horizontal"
-    padding: "8dp"
     size_hint: 1, None
     size: "280dp", "200dp"
+    radius: [20]
     on_release: app.open_recipe(root.recipe)
 
-    AsyncImage:
-        id: async_img
-        size_hint: None, 1
-        size: "280dp", "280dp"
-    BoxLayout:
+    MDBoxLayout:
+        size: "260dp", "200dp"
+        size_hint: None, None
+        AsyncImage:
+            id: async_img
+            
+            allow_stretch: True
+            keep_ratio: False
+
+    MDBoxLayout:
+        padding: 10
         orientation: 'vertical'
         MDLabel:
             text: root.text

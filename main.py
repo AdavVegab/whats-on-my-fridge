@@ -9,6 +9,7 @@ from kivy.lang import Builder
 from kivy.logger import Logger
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
+from kivy.loader import Loader
 # Components
 from kivymd.uix.boxlayout import MDBoxLayout
 from components.ingredient_card import IngredientCard
@@ -34,6 +35,7 @@ class WhatsOnMyFridge(MDApp):
         
     def build(self):
         # Create the Screen Manager for the App
+        Loader.loading_image = 'assets\images\loading.png'
         self.manager = RootScreenManagement()
         self.update_ingredients()
         self.search_for_recipes()
