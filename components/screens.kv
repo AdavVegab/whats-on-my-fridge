@@ -113,7 +113,7 @@
                     left_action_items: [['arrow-left', lambda x: root.to_dashboard()]]
 
                 ScrollView:
-                    id: scroll1
+                    id: scroll
                     scroll_timeout : 1000
                     MDList:     
                         orientation: 'vertical'
@@ -127,8 +127,6 @@
             name: "favorites"
             text: "Favorites"
             icon: "tag-heart"
-            on_enter:
-                app.search_for_recipes()
             BoxLayout:
                 orientation: 'vertical'        
                 MDToolbar:

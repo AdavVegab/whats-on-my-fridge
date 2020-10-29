@@ -7,9 +7,10 @@ Allows to save and retrieve the Griceries that the user has, and recomends Recip
 from os import name
 from kivy.lang import Builder
 from kivy.logger import Logger
+from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 # Components
-from kivymd.uix.label import MDLabel
+from kivymd.uix.boxlayout import MDBoxLayout
 from components.ingredient_card import IngredientCard
 from components.recipe_card import RecipeCard, RecipeSummaryCard, RecipeStepCard, RecipeFavoriteCard
 from components.screens import RootScreenManagement
@@ -101,6 +102,12 @@ class WhatsOnMyFridge(MDApp):
         rows = [i for i in self.manager.ids.step_list.children]       
         for row in rows:
             self.manager.ids.step_list.remove_widget(row)
+            
+        # Scroll Up
+        scroll_objective = BoxLayout(height=0.1)
+        self.manager.ids.step_list.add_widget(scroll_objective)
+        self.manager.ids.scroll.scroll_to(scroll_objective)
+        
         # Change to the Recipe Screen
         self.manager.to_recipe()
         # Add the Recipe Information
@@ -215,6 +222,7 @@ class WhatsOnMyFridge(MDApp):
             recipe_card.ids.favorite_mark.icon = "heart-outline"
             recipe_card.ids.favorite_mark.text_color = (0,0,0,1)
         self.favorites_changed = True
+        self.ingredients_changed = True
         
         # Try removing the Widget
         if self.manager.ids.screen_manager.current == 'favorites':
