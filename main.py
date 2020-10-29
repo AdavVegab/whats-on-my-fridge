@@ -224,7 +224,7 @@ class WhatsOnMyFridge(MDApp):
             recipe_card.ids.favorite_mark.icon = "heart-outline"
             recipe_card.ids.favorite_mark.text_color = (0,0,0,1)
         self.favorites_changed = True
-        self.ingredients_changed = True
+        #self.ingredients_changed = True
         
         # Try removing the Widget
         if self.manager.ids.screen_manager.current == 'favorites':
