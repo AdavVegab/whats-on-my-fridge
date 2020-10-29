@@ -1,18 +1,28 @@
 <IngredientCard@MDCard>:
-    orientation: "horizontal"
-    padding: "8dp"
-    size_hint: 1, None
-    size: "280dp", "60dp"
+    orientation: "vertical"
+    size_hint: None, None
+    size: "150dp", "150dp"
+    radius: [10]
+    MDBoxLayout:
+        padding: "9dp"
+        
+        size_hint: 1, 0.7
+        AsyncImage:
+            id: async_img
+            source: root.image_url
+            height: root.height * 0.7
 
-    AsyncImage:
-        id: async_img
+    MDBoxLayout:
+        size_hint: 1, 0.3
+        padding: "5dp"
+        MDLabel:
+            text: root.label
+            size_hint_x: 0.7
+            theme_text_color: "Secondary"
+            #height: self.texture_size[1]
+            valign: "center"
 
-    MDLabel:
-        text: root.text
-        theme_text_color: "Secondary"
-        size_hint_y: 1
-        height: self.texture_size[1]
-
-    MDIconButton:
-        icon: "delete"
-        on_release: app.delete_ingredient(root)
+        MDIconButton:
+            size_hint_x: 0.3
+            icon: "delete"
+            on_release: app.delete_ingredient(root)

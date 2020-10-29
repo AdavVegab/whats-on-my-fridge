@@ -61,7 +61,8 @@
                     right_action_items: [["playlist-plus", lambda x: root.add_items()]]
                 ScrollView:
                     scroll_timeout : 1000
-                    MDList:
+                    MDStackLayout:
+                        adaptive_height: True
                         id: md_list
                         padding: 10
                         spacing: 5
