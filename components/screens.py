@@ -1,7 +1,7 @@
 from kivy.lang import Builder
 from kivymd.uix.boxlayout import BoxLayout
 from kivymd.uix.bottomnavigation import MDBottomNavigationItem
-from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import ScreenManager, FadeTransition, CardTransition, SwapTransition, WipeTransition
 from kivymd.uix.screen import Screen
 
 # # Screen For Adding Items
@@ -32,6 +32,9 @@ class ContentNavigationDrawer(BoxLayout):
 class RootScreenManagement(NavigationLayout):
     def __init__(self):
         super().__init__()
+        
+        self.ids.screen_manager.current = 'intro'
+        
     def add_items(self):
         self.ids.screen_manager.current = 'item_detail'
     

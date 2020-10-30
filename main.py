@@ -6,10 +6,12 @@ Allows to save and retrieve the Griceries that the user has, and recomends Recip
 
 from os import name
 from kivy.lang import Builder
+from kivy.clock import Clock
 from kivy.logger import Logger
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivy.loader import Loader
+from kivy.core.window import Window
 # Components
 from kivymd.uix.boxlayout import MDBoxLayout
 from components.ingredient_card import IngredientCard
@@ -19,6 +21,8 @@ from components.screens import RootScreenManagement
 from utils.database_manager import DatabaseManager
 from utils.food_manager import FoodAPIManager, Recipe
 
+# Kivy Config
+Window.clearcolor = (1, 1, 1, 1)
 # Managers
 db = DatabaseManager()
 api = FoodAPIManager()
@@ -32,14 +36,19 @@ class WhatsOnMyFridge(MDApp):
         super().__init__()
         # Flags        
         self.ingredients_changed = True     # Flag: True if the Ingredients (databse) changed
+        Clock.schedule_once(self.startup, 4)
         
     def build(self):
         # Create the Screen Manager for the App
         Loader.loading_image = 'assets\images\loading.png'
         self.manager = RootScreenManagement()
+        
+        return self.manager
+    
+    def startup(self,_):
         self.update_ingredients()
         self.search_for_recipes()
-        return self.manager
+        self.manager.to_dashboard()
     
     def search_for_recipes(self):
         """

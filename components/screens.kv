@@ -26,6 +26,17 @@
 <RootScreenManagement@NavigationLayout>:
     ScreenManager:
         id: screen_manager
+
+        Screen:
+            name: 'intro'
+            MDBoxLayout:
+                md_bg_color: app.theme_cls.primary_color
+                Image:
+                    #size_hint: None,None
+                    allow_stretch: False
+                    keep_ratio: True
+                    source: 'assets\images\Intro.png'
+
         Screen:
             # DASHBOARD
             id: dashboard
