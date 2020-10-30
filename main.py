@@ -5,7 +5,6 @@ Allows to save and retrieve the Griceries that the user has, and recomends Recip
 """
 
 from os import name
-from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.logger import Logger
 from kivy.uix.boxlayout import BoxLayout
@@ -13,7 +12,6 @@ from kivymd.app import MDApp
 from kivy.loader import Loader
 from kivy.core.window import Window
 # Components
-from kivymd.uix.boxlayout import MDBoxLayout
 from components.ingredient_card import IngredientCard
 from components.recipe_card import RecipeCard, RecipeSummaryCard, RecipeStepCard, RecipeFavoriteCard
 from components.screens import RootScreenManagement
@@ -46,6 +44,9 @@ class WhatsOnMyFridge(MDApp):
         return self.manager
     
     def startup(self,_):
+        """
+        Loads the app Intro
+        """
         self.update_ingredients()
         self.search_for_recipes()
         self.manager.to_dashboard()
