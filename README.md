@@ -1,6 +1,25 @@
-# What's on my Fridge
+# What's in my Fridge
+
+An App where you can add the ingredients in your fridge and it will recommend what can you prepare with those.
 
 Code for the competition from it-talents.de ([October 2020](https://www.it-talents.de/foerderung/code-competition/code-competition-10-2020-edeka-digital))
+
+## IT Talents Competition
+This App was made for the [Code Competition for October 2020](https://www.it-talents.de/foerderung/code-competition/code-competition-10-2020-edeka-digital) from [IT-Talents.de](https://www.it-talents.de/)
+
+### Features
+
+#### Basic Features
+
+- Input option / reading in of existing Ingredients
+- Suggestions of recipes that can be cooked with the entered ingredients
+- Show the recipe preparation
+- Saving of the Ingredients and recipes in a SQL Database (Offline)
+
+#### Extra Features
+- the user can favorite recipes and save them for later
+- A beautiful UI 
+- The Recipes and ingredients have an asociated image 
 
 ## Set Up
 
