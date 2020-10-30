@@ -70,7 +70,7 @@ class FoodAPIManager:
         response = requests.request("POST", url, data=data)
         Logger.info(f'GetIngredientInfo: Response Status <{response.status_code}>')
         if response.status_code == 200:
-            Logger.info(f'GetIngredientInfo: JSON>> {response.json}')
+            Logger.debug(f'GetIngredientInfo: JSON>> {response.json()}')
             # Check if an image in aviable
             if response.json()[0].get('image', None) is not None:
                 return Ingredient(response.json()[0]['id'], response.json()[0]['original'],response.json()[0]['name'],response.json()[0]['image'])    
@@ -99,7 +99,7 @@ class FoodAPIManager:
         Logger.info(f'GetFullRecipe: Response Status <{response.status_code}>')
         # Check response
         if response.status_code == 200:
-            Logger.info(f'GetFullRecipe: JSON>> {response.json}')
+            Logger.debug(f'GetFullRecipe: JSON>> {response.json}')
             try:
                 for item in response.json()[0]['steps']:
                     steps.append(item)
@@ -137,7 +137,7 @@ class FoodAPIManager:
         # Check Response
         
         if response.status_code == 200:
-            Logger.info(f'GetRecipeWithIngred: JSON>> {response.json()}')
+            Logger.debug(f'GetRecipeWithIngred: JSON>> {response.json()}')
             for item in response.json():
                 missed_ingredients = []
                 for subitem in item['missedIngredients']:                
