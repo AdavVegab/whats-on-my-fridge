@@ -9,8 +9,7 @@
         size: "260dp", "200dp"
         size_hint: None, None
         AsyncImage:
-            id: async_img
-            
+            id: async_img            
             allow_stretch: True
             keep_ratio: False
 
@@ -18,15 +17,14 @@
         padding: 10
         orientation: 'vertical'
         MDLabel:
-            text: root.text
+            text: root.title
             haling: 'center'
             theme_text_color: "Secondary"
             height: self.texture_size[1]
             size_hint_y: None
             font_style: 'H6'
-        
         MDLabel:
-            id: summary
+            text: root.summary
             haling: 'left'
             theme_text_color: "Secondary"
             height: self.texture_size[1]
@@ -34,8 +32,6 @@
             font_style: 'Body1'
             theme_text_color: "Hint"
         MDLabel:
-            id: missing_text
-            text: root.text
             haling: 'center'
             theme_text_color: "Secondary"
             height: self.texture_size[1]
@@ -193,7 +189,6 @@
     padding: "20dp"
     size_hint: 1, None
     size: "280dp", "200dp"
-    on_release: app.open_recipe(root.recipe)
 
     MDLabel:
         text: root.text

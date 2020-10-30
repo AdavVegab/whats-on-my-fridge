@@ -21,10 +21,11 @@ class RecipeCard(MDCard):
     """
     MDCard containing a overview of the Recipe (for the Dashboard)
     """
-    text = StringProperty ()
+    title = StringProperty()
+    summary = StringProperty()
     def __init__(self, recipe):
         super().__init__()
-        self.text = recipe.name
+        self.title = recipe.name
         self.spoonacular_id = recipe.spoonacular_id
         self.image = recipe.image
         self.recipe = recipe
@@ -35,7 +36,7 @@ class RecipeCard(MDCard):
             self.ids.async_img.source = 'assets/images/unknown.png'
         # Show Body
         body_text = f"{self.recipe.nr_aviable} of {self.recipe.nr_missing + self.recipe.nr_aviable} Ingredients in the fridge"
-        self.ids.summary.text = body_text
+        self.summary = body_text
         # Show Missing
         max_chips = 5
         chips_nr = 0
