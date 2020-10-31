@@ -2,7 +2,7 @@
 
 An App where you can add the ingredients in your fridge and it will recommend what can you prepare with those.
 
-Code for the competition from it-talents.de ([October 2020](https://www.it-talents.de/foerderung/code-competition/code-competition-10-2020-edeka-digital))
+
 
 ## IT Talents Competition
 This App was made for the [Code Competition for October 2020](https://www.it-talents.de/foerderung/code-competition/code-competition-10-2020-edeka-digital) from [IT-Talents.de](https://www.it-talents.de/)
@@ -21,13 +21,22 @@ This App was made for the [Code Competition for October 2020](https://www.it-tal
 - A beautiful UI 
 - The Recipes and ingredients have an asociated image 
 
+### What can be better?
+- Better UX for the Recipe Steps
+- Working out of the main thread ( a more responsive UI)
+- Social Sharing
+- Cloud Database
+- User Management
+
 ## Set Up
 
 The following steps will guide you through setting up all the necessary dependencies to test the code.
 
+First you will need to clone the repository. Then open a terminal and change the working directory to the repository
+
 ### Python and Dependencies
 
-to use the code you will need a python installation, i would strongly recomend using [Python 3.7.9](https://www.python.org/downloads/release/python-379/).
+to use the code you will need a python installation, i would strongly recommend using [Python 3.7.9](https://www.python.org/downloads/release/python-379/).
 
 1. Install python on your system and create a new virtual enviroment using Python virtualenv in the repository folder
 
@@ -47,7 +56,7 @@ source whatsonmyfridge_venv/Scripts/activate
 ```
 Your terminal should now preface the path with something like ```(whatsonmyfridge_venv)```, indicating that the whatsonmyfridge_venv environment is active. 
 
-3. Install the necessary dependecies
+3. Install the necessary dependencies
 
 Using the file ```requirements.txt``` in the repository, install the required dependencies:
 
@@ -97,6 +106,15 @@ add the following to the file ```whatsonmyfridge_venv\Scripts\activate.bat``` in
 set "API_KEY_SPOONACULAR=1234YOURAPIKEY890"
 ```
 
+Do not forget to reactivate the enviroment:
+
+```bash
+whatsonmyfridge_venv\Scripts\activate
+```
+if you're in a bash terminal, instead do:
+```bash
+source whatsonmyfridge_venv/Scripts/activate
+```
 
 Now our are all set!
 
