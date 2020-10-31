@@ -1,7 +1,7 @@
 # What's in my Fridge
 
 An App where you can add the ingredients in your fridge and it will recommend what can you prepare with those.
-
+![Ingredients](assets/images/Intro.png)
 
 ## IT Talents Competition
 This App was made for the [Code Competition for October 2020](https://www.it-talents.de/foerderung/code-competition/code-competition-10-2020-edeka-digital) from [IT-Talents.de](https://www.it-talents.de/)
