@@ -3,7 +3,6 @@
 An App where you can add the ingredients in your fridge and it will recommend what can you prepare with those.
 
 
-
 ## IT Talents Competition
 This App was made for the [Code Competition for October 2020](https://www.it-talents.de/foerderung/code-competition/code-competition-10-2020-edeka-digital) from [IT-Talents.de](https://www.it-talents.de/)
 
@@ -21,7 +20,7 @@ This App was made for the [Code Competition for October 2020](https://www.it-tal
 - A beautiful UI 
 - The Recipes and ingredients have an asociated image 
 
-### What can be better?
+#### What can be better?
 - Better UX for the Recipe Steps
 - Working out of the main thread ( a more responsive UI)
 - Social Sharing
@@ -128,3 +127,42 @@ then run the main.py file using python
 python main.py
 ```
 
+# How To use
+
+
+## Starting Up
+after starting the Script you will see the following:
+
+![Dashboard after startup](docs/startup.png)
+
+This is the dashboard, right now it is empty. this is because our "Fridge" is empty.
+
+let's add something to it, to do this, open the menu on the top-left, and choose "What's in my Fridge?"
+
+
+![Navigation to the Ingredients](docs/navigate_to_ingredients.png)
+
+## Adding Ingredients
+
+use the button on the top-right to add an Ingredient. (**Right now the app only support English!**)
+
+![Add an Ingredient](docs/add_ingredient.png)
+
+Try adding multiple Ingredients, so we can get interesting recommendations
+
+![Ingredients](docs/ingredients.png)
+
+## The Dashboard
+
+navigate back to the Dashboard, after a couple of seconds you should be getting around 10 recommendations. this will show the image (if exist), a summary of hoy many ingredients you still need to get, and the list of missing ingredients.
+
+![Ingredients](docs/dashboard.png)
+
+if you click on a recipe, you will get an overview of the required ingredients and the detailed steps to cook it!
+
+![Ingredients](docs/steps.png)
+
+## Saving Recipes
+
+if you loved a recipe, or just want so save it for later, you can click on the little heart in the dashboard to save the recipe in your favorites, you can then access them by clicking in the top right button
+![Ingredients](docs/favorite.png)
